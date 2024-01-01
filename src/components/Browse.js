@@ -1,6 +1,9 @@
+import Navbar from "./Navbar";
 const Browse = () => {
   return (
-    <div>Browse</div>
+    <div>
+        <Navbar/>
+    </div>
   )
 }
 
