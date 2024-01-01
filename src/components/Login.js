@@ -40,7 +40,7 @@ const Login = () => {
         const errorCode = error.code;
         const errorMessage = error.message;
         // ..
-        console.log(errorCode +"-"+errorMessage)
+        setErrorMessage2(errorCode +"-"+errorMessage)
       });
     } else {
       signInWithEmailAndPassword(
@@ -57,7 +57,7 @@ const Login = () => {
       .catch((error) => {
         const errorCode = error.code;
         const errorMessage = error.message;
-        console.log(errorCode +"-"+errorMessage)
+        setErrorMessage2(errorCode +"-"+errorMessage)
 
       });
     }
