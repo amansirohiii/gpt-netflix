@@ -1,6 +1,11 @@
 import { checkValidPassword, checkValidEmail } from "../utils/validate";
 import Navbar from "./Navbar";
 import { useRef, useState } from "react";
+import {
+  signInWithEmailAndPassword,
+  createUserWithEmailAndPassword,
+} from "firebase/auth";
+import { auth } from "../utils/firebase";
 
 const Login = () => {
   const [isSignInForm, setIsSignInForm] = useState(true);
@@ -9,13 +14,53 @@ const Login = () => {
 
   const email = useRef(null);
   const password = useRef(null);
-    console.log(email, password)
+  // console.log(email, password)
   const toggleSignInForm = () => {
     setIsSignInForm(!isSignInForm);
   };
   const handleButtonClick = () => {
     setErrorMessage(checkValidEmail(email.current.value));
     setErrorMessage2(checkValidPassword(password.current.value));
+
+    if (errorMessage || errorMessage2) return;
+    if (!isSignInForm) {
+      createUserWithEmailAndPassword(
+        auth,
+        email.current.value,
+        password.current.value
+      )
+      .then((userCredential) => {
+        // Signed up
+        const user = userCredential.user;
+        // ...
+        console.log(user)
+
+      })
+      .catch((error) => {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        // ..
+        console.log(errorCode +"-"+errorMessage)
+      });
+    } else {
+      signInWithEmailAndPassword(
+        auth,
+        email.current.value,
+        password.current.value
+      )
+      .then((userCredential) => {
+        // Signed in
+        const user = userCredential.user;
+        // ...
+        console.log(user)
+      })
+      .catch((error) => {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        console.log(errorCode +"-"+errorMessage)
+
+      });
+    }
   };
   return (
     <div>
@@ -27,7 +72,7 @@ const Login = () => {
           className="brightness-50"
         />
       </div>
-      <form className="absolute p-12 bg-black w-3/12 mt-32 mx-auto left-0 right-0 text-white bg-opacity-80" onSubmit={(e)=>e.preventDefault()}>
+      <form onSubmit={(e)=>e.preventDefault()} className="absolute p-12 bg-black w-3/12 mt-32 mx-auto left-0 right-0 text-white bg-opacity-80">
         <h1 className="text-3xl font-bold py-6">
           {isSignInForm ? "Sign In" : "Sign Up"}
         </h1>
@@ -35,21 +80,21 @@ const Login = () => {
           <input
             type="text"
             placeholder="Full Name"
-            className="my-2 p-4 w-full bg-gray-700 rounded-md "
+            className="my-4 p-4 w-full bg-gray-700 rounded-md "
           />
         )}
         <input
           type="text"
           placeholder="Email Address"
-          className="my-2 p-4 w-full bg-gray-700 rounded-md "
+          className="my-4 p-4 w-full bg-gray-700 rounded-md "
           ref={email}
         />
-                <p className="text-red-500">{errorMessage}</p>
+        <p className="text-red-500">{errorMessage}</p>
 
         <input
           type="password"
           placeholder="Password"
-          className="my-2 p-4 w-full bg-gray-700 rounded-md"
+          className="my-4 p-4 w-full bg-gray-700 rounded-md"
           ref={password}
         />
         <p className="text-red-500">{errorMessage2}</p>
