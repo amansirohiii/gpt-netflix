@@ -7,16 +7,15 @@ import {
   updateProfile
 } from "firebase/auth";
 import { auth } from "../utils/firebase";
-import { useNavigate } from "react-router";
 import { useDispatch } from "react-redux";
 import { addUser } from "../utils/userSlice";
+import { BG_IMAGE, AVATAR_URL } from "../utils/constants";
 const Login = () => {
 const dispatch = useDispatch();
 
   const [isSignInForm, setIsSignInForm] = useState(true);
   const [errorMessage, setErrorMessage] = useState(null);
   const [errorMessage2, setErrorMessage2] = useState(null);
-  const navigate = useNavigate();
 
     const name = useRef(null);
   const email = useRef(null);
@@ -43,7 +42,7 @@ const dispatch = useDispatch();
         const user = userCredential.user;
         updateProfile(user, {
           displayName: name.current.value,
-          photoURL: "https://avatars.githubusercontent.com/u/91265420?v=4",
+          photoURL: {AVATAR_URL},
         }) .then(() => {
             const { uid, email, displayName, photoURL } = auth.currentUser;
        dispatch(
@@ -54,7 +53,6 @@ const dispatch = useDispatch();
                 photoURL: photoURL,
               })
             );
-            navigate("/browse");
           })
           .catch((error) => {
             setErrorMessage(error.message);
@@ -77,20 +75,6 @@ const dispatch = useDispatch();
         const user = userCredential.user;
         // ...
         console.log(user)
-      }) .then(() => {
-        const { uid, email, displayName, photoURL } = auth.currentUser;
-   dispatch(
-        addUser({
-            uid: uid,
-            email: email,
-            displayName: displayName,
-            photoURL: photoURL,
-          })
-        );
-        navigate("/browse");
-      })
-      .catch((error) => {
-        setErrorMessage(error.message);
       })
       .catch((error) => {
         const errorCode = error.code;
@@ -105,7 +89,7 @@ const dispatch = useDispatch();
       <Navbar />
       <div className="absolute">
         <img
-          src="https://assets.nflxext.com/ffe/siteui/vlv3/c31c3123-3df7-4359-8b8c-475bd2d9925d/15feb590-3d73-45e9-9e4a-2eb334c83921/IN-en-20231225-popsignuptwoweeks-perspective_alpha_website_large.jpg"
+          src={BG_IMAGE}
           alt="bg-image"
           className="brightness-50"
         />
