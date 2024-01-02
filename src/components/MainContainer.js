@@ -4,7 +4,7 @@ import { useSelector } from "react-redux";
 const MainContainer = () => {
     const movies = useSelector((store) => store.movies?.nowPlayingMovies);
 
-  if (!movies || !movies.length) return;
+  if (!movies) return;
 // console.log(movies)
   const mainMovie = movies[0];
 //  console.log(movies[0])
@@ -12,7 +12,7 @@ const MainContainer = () => {
   const { original_title, overview, id } = mainMovie;
 
   return (
-    <div>
+    <div className="overflow-hidden">
       <VideoTitle title={original_title} overview={overview} />
       <VideoBackground movieId={id} />
     </div>

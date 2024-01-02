@@ -88,7 +88,7 @@ const Login = () => {
     <div>
       <Navbar />
       <div className="absolute">
-        <img src={BG_IMAGE} alt="bg-image" className="brightness-50" />
+        <img src={BG_IMAGE} alt="bg" className="brightness-50" />
       </div>
       <form
         onSubmit={(e) => e.preventDefault()}
