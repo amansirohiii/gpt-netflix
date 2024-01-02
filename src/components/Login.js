@@ -4,20 +4,20 @@ import { useRef, useState } from "react";
 import {
   signInWithEmailAndPassword,
   createUserWithEmailAndPassword,
-  updateProfile
+  updateProfile,
 } from "firebase/auth";
 import { auth } from "../utils/firebase";
 import { useDispatch } from "react-redux";
 import { addUser } from "../utils/userSlice";
 import { BG_IMAGE, AVATAR_URL } from "../utils/constants";
 const Login = () => {
-const dispatch = useDispatch();
+  const dispatch = useDispatch();
 
   const [isSignInForm, setIsSignInForm] = useState(true);
   const [errorMessage, setErrorMessage] = useState(null);
   const [errorMessage2, setErrorMessage2] = useState(null);
 
-    const name = useRef(null);
+  const name = useRef(null);
   const email = useRef(null);
   const password = useRef(null);
   // console.log(email, password)
@@ -38,63 +38,62 @@ const dispatch = useDispatch();
         email.current.value,
         password.current.value
       )
-      .then((userCredential) => {
-        const user = userCredential.user;
-        updateProfile(user, {
-          displayName: name.current.value,
-          photoURL: AVATAR_URL,
-        }) .then(() => {
-            const { uid, email, displayName, photoURL } = auth.currentUser;
-       dispatch(
-            addUser({
-                uid: uid,
-                email: email,
-                displayName: displayName,
-                photoURL: photoURL,
-              })
-            );
+        .then((userCredential) => {
+          const user = userCredential.user;
+          updateProfile(user, {
+            displayName: name.current.value,
+            photoURL: AVATAR_URL,
           })
-          .catch((error) => {
-            setErrorMessage(error.message);
-          });
-      })
-      .catch((error) => {
-        const errorCode = error.code;
-        const errorMessage = error.message;
-        // ..
-        setErrorMessage(errorCode +"-"+errorMessage)
-      });
+            .then(() => {
+              const { uid, email, displayName, photoURL } = auth.currentUser;
+              dispatch(
+                addUser({
+                  uid: uid,
+                  email: email,
+                  displayName: displayName,
+                  photoURL: photoURL,
+                })
+              );
+            })
+            .catch((error) => {
+              setErrorMessage(error.message);
+            });
+        })
+        .catch((error) => {
+          const errorCode = error.code;
+          const errorMessage = error.message;
+          // ..
+          setErrorMessage(errorCode + "-" + errorMessage);
+        });
     } else {
       signInWithEmailAndPassword(
         auth,
         email.current.value,
         password.current.value
       )
-      .then((userCredential) => {
-        // Signed in
-        const user = userCredential.user;
-        // ...
-        console.log(user)
-      })
-      .catch((error) => {
-        const errorCode = error.code;
-        const errorMessage = error.message;
-        setErrorMessage(errorCode +"-"+errorMessage)
-
-      });
+        .then((userCredential) => {
+          // Signed in
+          const user = userCredential.user;
+          // ...
+          console.log(user);
+        })
+        .catch((error) => {
+          const errorCode = error.code;
+          const errorMessage = error.message;
+          setErrorMessage(errorCode + "-" + errorMessage);
+        });
     }
   };
   return (
     <div>
       <Navbar />
       <div className="absolute">
-        <img
-          src={BG_IMAGE}
-          alt="bg-image"
-          className="brightness-50"
-        />
+        <img src={BG_IMAGE} alt="bg-image" className="brightness-50" />
       </div>
-      <form onSubmit={(e)=>e.preventDefault()} className="absolute p-12 bg-black w-3/12 mt-32 mx-auto left-0 right-0 text-white bg-opacity-80">
+      <form
+        onSubmit={(e) => e.preventDefault()}
+        className="absolute p-12 bg-black w-3/12 mt-32 mx-auto left-0 right-0 text-white bg-opacity-80"
+      >
         <h1 className="text-3xl font-bold py-6">
           {isSignInForm ? "Sign In" : "Sign Up"}
         </h1>

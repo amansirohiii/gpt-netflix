@@ -1,5 +1,7 @@
-import useNowPlayingMovies from "../hooks/useNowPlayMovies";
+import useNowPlayingMovies from "../hooks/useNowPlayingMovies";
 import Navbar from "./Navbar";
+import MainContainer from "./MainContainer";
+import SecondaryContainer from "./SecondaryContainer";
 
 const Browse = () => {
     useNowPlayingMovies();
@@ -7,6 +9,8 @@ const Browse = () => {
   return (
     <div>
         <Navbar/>
+        <MainContainer/>
+        <SecondaryContainer/>
     </div>
   )
 }
