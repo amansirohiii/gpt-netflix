@@ -23,7 +23,7 @@ const GptSearchBar = () => {
   };
     const handleGptSearchClick = async () => {
       try {
-        const response = await fetch("http://localhost:3000/api/openai-request", {
+        const response = await fetch("https://gpt-netflix-backend.vercel.app/api/openai-request", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
