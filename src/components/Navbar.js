@@ -52,7 +52,7 @@ const Navbar = () => {
       });
   };
   return (
-    <div className="fixed w-screen px-8 py-2 z-40 flex flex-col md:flex-row justify-between bg-gradient-to-b from-black">
+    <div className="fixed w-screen px-2 md:px-8 py-2 z-40 flex flex-col md:flex-row justify-between bg-gradient-to-b from-black">
       <img className="w-44 mx-auto md:mx-0" src={LOGO_URL} alt="logo" />
       {user && (
 
