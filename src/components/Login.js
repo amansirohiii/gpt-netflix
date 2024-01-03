@@ -88,11 +88,11 @@ const Login = () => {
     <div>
       <Navbar />
       <div className="absolute">
-        <img src={BG_URL} alt="bg" className="brightness-50" />
+        <img src={BG_URL} alt="bg" className="brightness-50 h-screen object-cover w-screen" />
       </div>
       <form
         onSubmit={(e) => e.preventDefault()}
-        className="absolute p-12 bg-black w-3/12 mt-32 mx-auto left-0 right-0 text-white bg-opacity-80"
+        className="absolute p-12 bg-black w-11/12 md:w-3/12 mt-32 mx-auto left-0 right-0 text-white bg-opacity-80"
       >
         <h1 className="text-3xl font-bold py-6">
           {isSignInForm ? "Sign In" : "Sign Up"}
