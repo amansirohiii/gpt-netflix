@@ -1,14 +1,15 @@
 import { useDispatch, useSelector } from "react-redux";
-import { useRef, useState } from "react";
+import { useRef} from "react";
 import { API_OPTIONS } from "../utils/constants";
 import lang from "../utils/languageConstants";
-import { addGptMovieResults } from "../redux/gptSlice";
+import { addGptMovieResults, toggleMoviesLoading } from "../redux/gptSlice";
+import Shimmer from "./Shimmer";
 
 const GptSearchBar = () => {
   const dispatch = useDispatch();
   const langKey = useSelector((store) => store.config.lang);
+  const moviesLoading = useSelector((store)=>store.gpt.moviesLoading);
   const searchText = useRef(null);
-  const [isMovieLoading, setIsMovieLoading] = useState(false);
 
   // search movie in TMDB
   const searchMovieTMDB = async (movie) => {
@@ -27,13 +28,13 @@ const GptSearchBar = () => {
       alert("Please enter something to search."); // You can customize this alert
       return;
     }
-    setIsMovieLoading(true);
+    dispatch(toggleMoviesLoading(true));
     try {
       const gptQuery =
         "Act as a Movie Recommendation system and suggest some movies for the query : " +
         searchText.current.value +
         ". only give me names of 5 movies, comma seperated like the example result given ahead. Example Result: Gadar, Sholay, Don, Golmaal, Koi Mil Gaya";
-      const response = await fetch("http://localhost:5000/api/openai-request", {
+      const response = await fetch("https://gpt-netflix-backend.vercel.app/api/openai-request", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -66,15 +67,17 @@ const GptSearchBar = () => {
         addGptMovieResults({ movieNames: gptMovies, movieResults: tmdbResults })
       );
 
-      setIsMovieLoading(false);
+      dispatch(toggleMoviesLoading(false));
     } catch (error) {
-      setIsMovieLoading(false);
+      dispatch(toggleMoviesLoading(false));
       console.error("Error occurred:", error.message);
       // Handle the error
     }
   };
 
   return (
+    <>
+
     <div className="pt-[35%] md:pt-[10%] flex justify-center">
       <form
         className="w-full md:w-1/2 bg-black grid grid-cols-12"
@@ -90,10 +93,15 @@ const GptSearchBar = () => {
           className="col-span-3 m-4 py-2 px-4 bg-red-700 text-white rounded-lg"
           onClick={handleGptSearchClick}
         >
-          {isMovieLoading ? "Loading.." : lang[langKey].search}
+          {moviesLoading ?"Loading.." : lang[langKey].search}
         </button>
       </form>
+
     </div>
+    {moviesLoading && (
+      <Shimmer/>
+    )}
+   </>
   );
 };
 export default GptSearchBar;
