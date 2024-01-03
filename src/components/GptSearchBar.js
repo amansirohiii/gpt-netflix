@@ -23,13 +23,17 @@ const GptSearchBar = () => {
     return json.results;
   };
   const handleGptSearchClick = async () => {
+    if (!searchText.current.value.trim()) {
+      alert("Please enter something to search."); // You can customize this alert
+      return;
+    }
     setIsMovieLoading(true);
     try {
       const gptQuery =
         "Act as a Movie Recommendation system and suggest some movies for the query : " +
         searchText.current.value +
         ". only give me names of 5 movies, comma seperated like the example result given ahead. Example Result: Gadar, Sholay, Don, Golmaal, Koi Mil Gaya";
-      const response = await fetch("https://gpt-netflix-backend/api/openai-request", {
+      const response = await fetch("https://gpt-netflix-backend.vercel.app/api/openai-request", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
