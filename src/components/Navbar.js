@@ -2,11 +2,11 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router";
 import { onAuthStateChanged, signOut } from "@firebase/auth";
 import { auth } from "../utils/firebase";
-import { addUser, removeUser } from "../utils/userSlice";
+import { addUser, removeUser } from "../redux/userSlice";
 import { useEffect } from "react";
 import { LOGO_URL, SUPPORTED_LANGUAGES } from "../utils/constants";
-import { toggleGptSearchView } from "../utils/gptSlice";
-import { changeLanguage } from "../utils/configSlice";
+import { toggleGptSearchView } from "../redux/gptSlice";
+import { changeLanguage } from "../redux/configSlice";
 const Navbar = () => {
     const showGptSearch = useSelector((store)=>store.gpt.showGptSearch)
   const user = useSelector((store) => store.user);
