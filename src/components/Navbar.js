@@ -5,7 +5,7 @@ import { auth } from "../utils/firebase";
 import { addUser, removeUser } from "../redux/userSlice";
 import { useEffect } from "react";
 import { LOGO_URL, SUPPORTED_LANGUAGES } from "../utils/constants";
-import { toggleGptSearchView } from "../redux/gptSlice";
+import { clearGptMovieResults, toggleGptSearchView } from "../redux/gptSlice";
 import { changeLanguage } from "../redux/configSlice";
 const Navbar = () => {
     const showGptSearch = useSelector((store)=>store.gpt.showGptSearch)
@@ -15,6 +15,8 @@ const Navbar = () => {
 
   const handleGptSearchClick = ()=>{
     dispatch(toggleGptSearchView())
+    if(!showGptSearch) dispatch(clearGptMovieResults())
+
   }
   const handleLanguageChange = (e) => {
     dispatch(changeLanguage(e.target.value));
