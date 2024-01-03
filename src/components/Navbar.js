@@ -57,7 +57,7 @@ const Navbar = () => {
         <div className="flex p-2 justify-between ">
            {showGptSearch && (
             <select
-              className="p-2 m-2 bg-gray-300 text-black"
+              className="py-2 px-4 mx-4 my-4  bg-gray-500 text-white rounded-lg"
               onChange={handleLanguageChange}
             >
               {SUPPORTED_LANGUAGES.map((lang) => (
