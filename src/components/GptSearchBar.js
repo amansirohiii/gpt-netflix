@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from "react-redux";
-import { useRef} from "react";
+import { useRef, useState} from "react";
 import { API_OPTIONS } from "../utils/constants";
 import lang from "../utils/languageConstants";
 import { addGptMovieResults, toggleMoviesLoading } from "../redux/gptSlice";
@@ -10,6 +10,8 @@ const GptSearchBar = () => {
   const langKey = useSelector((store) => store.config.lang);
   const moviesLoading = useSelector((store)=>store.gpt.moviesLoading);
   const searchText = useRef(null);
+  const [errorMessage, setErrorMessage] = useState("");
+
 
   // search movie in TMDB
   const searchMovieTMDB = async (movie) => {
@@ -25,9 +27,11 @@ const GptSearchBar = () => {
   };
   const handleGptSearchClick = async () => {
     if (!searchText.current.value.trim()) {
-      alert("Please enter something to search."); // You can customize this alert
+      setErrorMessage("Please enter something to search.");
       return;
     }
+    setErrorMessage("");
+
     dispatch(toggleMoviesLoading(true));
     try {
       const gptQuery =
@@ -98,6 +102,9 @@ const GptSearchBar = () => {
       </form>
 
     </div>
+    {errorMessage && (
+        <p className="text-red-500 text-center">{errorMessage}</p>
+      )}
     {moviesLoading && (
       <Shimmer/>
     )}
