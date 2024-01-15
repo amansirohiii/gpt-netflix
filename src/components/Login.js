@@ -140,7 +140,7 @@ setIsSignInForm(true)    }
             ? "New User? Sign Up Now."
             : "Already registered? Sign In Now."}
         </p>
-        <p className="my-2 cursor-pointer text-green-400 text-center" onClick={handleTestLogin}>Test Login</p>
+        <p className="mt-2 mb-1 cursor-pointer text-green-400 text-center" onClick={handleTestLogin}>Test Login</p>
 
       </form>
     </div>
