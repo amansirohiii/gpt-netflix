@@ -71,7 +71,7 @@ const Navbar = () => {
           )}
            <button onClick={handleGptSearchClick} className="py-2 px-4 mx-4 my-2 bg-purple-800 text-white rounded-lg">{showGptSearch? "Homepage": "GPT Search"}</button>
 
-            <img className="hidden md:block w-12 h-auto" alt="usericon" src={user?.photoURL} />
+            <img className="hidden md:block w-12 h-5" alt="usericon" src={user?.photoURL} />
 
             <button
               onClick={handleSignOut}
