@@ -20,6 +20,7 @@ const Login = () => {
   const name = useRef(null);
   const email = useRef(null);
   const password = useRef(null);
+  const signInButton = useRef(null);
   // console.log(email, password)
   const toggleSignInForm = () => {
     setIsSignInForm(!isSignInForm);
@@ -84,11 +85,18 @@ const Login = () => {
         });
     }
   };
+  const handleTestLogin=()=>{
+    if (!isSignInForm) {
+setIsSignInForm(true)    }
+    email.current.value="test@gmail.com";
+    password.current.value="Test@123";
+    signInButton.current.click();
+  }
   return (
     <div>
       <Navbar />
       <div className="absolute">
-        <img src={BG_URL} alt="bg" className="brightness-50 h-screen object-cover w-screen" />
+        <img src={BG_URL} alt="bg" className="brightness-50 h-screen sm:h-full object-cover w-screen" />
       </div>
       <form
         onSubmit={(e) => e.preventDefault()}
@@ -121,6 +129,7 @@ const Login = () => {
         />
         <p className="text-red-500">{errorMessage2}</p>
         <button
+        ref={signInButton}
           className="my-6 p-4 bg-red-700 w-full rounded-md"
           onClick={handleButtonClick}
         >
@@ -131,6 +140,8 @@ const Login = () => {
             ? "New User? Sign Up Now."
             : "Already registered? Sign In Now."}
         </p>
+        <p className="my-2 cursor-pointer text-green-400 text-center" onClick={handleTestLogin}>Test Login</p>
+
       </form>
     </div>
   );
