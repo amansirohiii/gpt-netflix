@@ -1,6 +1,6 @@
 import { checkValidPassword, checkValidEmail } from "../utils/validate";
 import Navbar from "./Navbar";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import {
   signInWithEmailAndPassword,
   createUserWithEmailAndPassword,
@@ -85,18 +85,28 @@ const Login = () => {
         });
     }
   };
-  const handleTestLogin=()=>{
+  const handleTestLogin = () => {
     if (!isSignInForm) {
-setIsSignInForm(true)    }
-    email.current.value="test@gmail.com";
-    password.current.value="Test@123";
+      setIsSignInForm(true);
+    }
+
+    email.current.value = "test@gmail.com";
+    password.current.value = "Test@123";
     signInButton.current.click();
   }
   return (
     <div>
       <Navbar />
       <div className="absolute">
+<<<<<<< HEAD
         <img src={BG_URL} alt="bg" className="brightness-50 min-h-screen sm:h-full object-cover w-screen" />
+=======
+        <img
+          src={BG_URL}
+          alt="bg"
+          className="brightness-50 h-screen sm:h-full object-cover w-screen"
+        />
+>>>>>>> 0ba5bc0 (update search bar)
       </div>
       <form
         onSubmit={(e) => e.preventDefault()}
@@ -129,7 +139,7 @@ setIsSignInForm(true)    }
         />
         <p className="text-red-500">{errorMessage2}</p>
         <button
-        ref={signInButton}
+          ref={signInButton}
           className="my-6 p-4 bg-red-700 w-full rounded-md"
           onClick={handleButtonClick}
         >
@@ -140,8 +150,17 @@ setIsSignInForm(true)    }
             ? "New User? Sign Up Now."
             : "Already registered? Sign In Now."}
         </p>
+<<<<<<< HEAD
         <p className="mt-2 mb-1 cursor-pointer text-green-400 text-center" onClick={handleTestLogin}>Test Login</p>
 
+=======
+        <p
+          className="my-2 cursor-pointer text-green-400 text-center"
+          onClick={handleTestLogin}
+        >
+          Test Login
+        </p>
+>>>>>>> 0ba5bc0 (update search bar)
       </form>
     </div>
   );
