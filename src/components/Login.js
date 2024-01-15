@@ -96,7 +96,7 @@ setIsSignInForm(true)    }
     <div>
       <Navbar />
       <div className="absolute">
-        <img src={BG_URL} alt="bg" className="brightness-50 h-screen sm:h-full object-cover w-screen" />
+        <img src={BG_URL} alt="bg" className="brightness-50 h-full object-cover w-screen" />
       </div>
       <form
         onSubmit={(e) => e.preventDefault()}
